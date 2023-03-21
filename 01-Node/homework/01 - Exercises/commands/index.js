@@ -4,7 +4,9 @@ const process = require("process");
 
 function pwd() {}
 
-function date() {}
+function date() {
+  console.log("hola wacho");
+}
 
 function echo() {}
 
@@ -18,4 +20,4 @@ function tail() {}
 
 function curl() {}
 
-module.exports = {};
+module.exports = { pwd, date, echo, ls, cat, head, tail, curl };
