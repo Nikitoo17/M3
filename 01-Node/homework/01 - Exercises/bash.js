@@ -7,28 +7,14 @@ function bash() {
   process.stdin.on(
     "data",
     (funcion = (data) => {
-      let args = data.toString();
-      let cmd = args.split(" ")[0].trim("");
-      let value = true;
-      for (const prop in commands) {
-        if (cmd === prop) {
-          value = true;
-          return commands[cmd](print(data.split(" ").slice(1).join(" ")));
-          //commands.prop(print, args);
-        } else {
-          value = false;
-        }
-      }
-      if (!value) {
-        print(`command not found: ${cmd}`);
-      }
+      let input = data.toString();
+      let args = data.split(" ").slice(1).join(" ");
+      let cmd = input.split(" ")[0].trim("");
+      if (!commands[cmd]) print(`command not found: ${cmd}`);
+      else commands[cmd](print, args);
     })
   );
 }
-// function funcion(data) {
-//   let args = "" + data;
-//   let cmd = args.split(" ")[0];
-// }
 
 function print(output) {
   process.stdout.write(output);

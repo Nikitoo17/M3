@@ -2,21 +2,45 @@ const fs = require("fs");
 const utils = require("../utils/request");
 const process = require("process");
 
-function pwd() {}
-
-function date() {
-  console.log("hola wacho");
+function pwd(print) {
+  print(process.cwd());
 }
 
-function echo() {}
+function date(print) {
+  print(Date());
+}
 
-function ls() {}
+function echo(print, args) {
+  print(args);
+}
 
-function cat() {}
+function ls(print) {
+  fs.readdir(".", (error, files) => {
+    if (error) throw Error("Hubo un error");
+    print(files.toString().split(",").join(" "));
+  });
+}
 
-function head() {}
+const readFile = (print, filename, lines) => {
+  fs.readFile(filename, "utf-8", (error, data) => {
+    if (error) throw Error("Hubo un error");
+    !lines && print(data);
+    lines === "head" && print(data.split("\n")[0]);
+    lines === "tail" && print(data.split("\n").at(-1).trim());
+  });
+};
 
-function tail() {}
+function cat(print, args) {
+  readFile(print, args);
+}
+
+function head(print, args) {
+  readFile(print, args, "head");
+}
+
+function tail(print, args) {
+  readFile(print, args, "tail");
+}
 
 function curl() {}
 
